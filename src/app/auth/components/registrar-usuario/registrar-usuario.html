@@ -1,0 +1,33 @@
+<form #usuarioForm="ngForm" (ngSubmit)="crearUsuario()" class="formulario-usuario">
+  <h2>Registrar Usuario</h2>
+
+  <label>Nombres:</label>
+  <input name="nombres" [(ngModel)]="usuario.nombres" required />
+
+  <label>Apellidos:</label>
+  <input name="apellidos" [(ngModel)]="usuario.apellidos" required />
+
+  <label>Correo:</label>
+  <input name="correo" [(ngModel)]="usuario.correo" required email />
+
+  <label>Contraseña:</label>
+  <input name="contrasena" [(ngModel)]="usuario.contrasena" required type="password" />
+
+  <label>Teléfono:</label>
+  <input name="telefono" [(ngModel)]="usuario.telefono" required />
+
+  <label>DNI:</label>
+  <input name="dni" [(ngModel)]="usuario.dni" required />
+
+  <label>Dirección:</label>
+  <input name="direccion" [(ngModel)]="usuario.direccion" required />
+
+  <label>Rol:</label>
+  <select name="rol" [(ngModel)]="usuario.rol.id" required>
+    <option [value]="1">ADMIN</option>
+    <option [value]="2">MOZO</option>
+    <option [value]="3">CAJERO</option>
+  </select>
+    <button type="submit">Guardar</button>
+  <button type="button" (click)="cancelar()">Cancelar</button>
+</form>

@@ -1,0 +1,18 @@
+<div class="grafico-container">
+  <h2>Ventas por Categoría</h2>
+  <canvas baseChart
+    [data]="categoriasChart"
+    [options]="chartOptions"
+    [type]="'bar'"
+    (chartClick)="onChartClick($event.event, $event.active)">
+  </canvas>
+</div>
+
+<div class="grafico-container" *ngIf="categoriaSeleccionada">
+  <h2>Platos más vendidos de {{ categoriaSeleccionada }}</h2>
+  <canvas baseChart
+    [data]="platosChart"
+    [options]="chartOptions"
+    [type]="'bar'">
+  </canvas>
+</div>

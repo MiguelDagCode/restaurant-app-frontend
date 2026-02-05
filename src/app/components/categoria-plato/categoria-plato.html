@@ -1,0 +1,52 @@
+<div class="container mt-4">
+  <h3 class="mb-4 text-center">🗂️ Mantenimiento de Categorías</h3>
+
+  <button class="btn btn-primary mb-3" (click)="abrirModalCrear()">
+    <i class="bi bi-plus-circle"></i> Nueva Categoría
+  </button>
+
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let categoria of categorias; let i = index">
+        <td>{{ categoria.id }}</td>
+        <td>{{ categoria.nombre }}</td>
+        <td class="text-center">
+          <button class="btn btn-warning btn-sm me-2" (click)="abrirModalEditar(categoria)">
+            <i class="bi bi-pencil-square"></i>
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="eliminar(categoria.id!)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal fade show d-block" tabindex="-1" *ngIf="modalVisible">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ editando ? 'Editar Categoría' : 'Nueva Categoría' }}</h5>
+          <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control" [(ngModel)]="nuevaCategoria.nombre" placeholder="Nombre de categoría" required />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button type="button" class="btn btn-success" (click)="guardar()">
+            <i class="bi bi-save"></i> Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

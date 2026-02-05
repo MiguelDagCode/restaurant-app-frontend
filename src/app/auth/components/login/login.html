@@ -1,0 +1,17 @@
+<div class="login-container">
+  <h2>Iniciar sesión</h2>
+
+  <form (ngSubmit)="onLogin()">
+    <label for="correo">Correo electrónico:</label>
+    <input type="email" id="correo" [(ngModel)]="loginRequest.correo" name="correo" required />
+
+    <label for="contrasena">Contraseña:</label>
+    <input type="" id="contrasena" [(ngModel)]="loginRequest.contrasena" name="contrasena" required />
+
+    <button type="submit">Ingresar</button>
+  </form>
+  <button (click)="irARegistro()">Registrarse</button>
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+</div>
