@@ -1,5 +1,4 @@
-
 export interface LoginRequest{
     correo: string;
-    contrasena: string;
+    password: string; // <--- Debe coincidir con el DTO de Java
 }

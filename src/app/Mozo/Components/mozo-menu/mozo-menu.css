@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:host {
+  font-family: 'Poppins', sans-serif;
+  display: block;
+  
+  /* Variables globales del componente */
+  --orange: #FF6B35;
+  --orange-light: #FFF0E6;
+  --bg-gray: #FAFAFA;
+}
+
+.bg-light-gray { background-color: var(--bg-gray); }
+.text-orange { color: var(--orange) !important; }
+.bg-orange-light { background-color: var(--orange-light) !important; }
+.bg-orange-50 { background-color: #fff9f6 !important; } /* Un naranja súper suave para fondo de mesas ocupadas */
+
+/* Utilidades de Borde */
+.border-orange { border-color: var(--orange) !important; }
+.border-light { border-color: #EAEAEA !important; }
+
+/* Icono sutil */
+.text-muted-icon {
+  color: #a0a0a0;
+}
+
+/* Efectos de Hover */
+.hover-orange:hover {
+  color: var(--orange) !important;
+}
+.transition-colors {
+  transition: color 0.2s ease-in-out;
+}
+
+/* Tarjeta de Mesa Interactiva */
+.table-card {
+  transition: all 0.2s ease-in-out;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Al pasar el ratón por encima, la tarjeta se eleva ligeramente y el borde/icono se vuelve naranja */
+.table-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05) !important;
+  border-color: var(--orange) !important;
+}
+.table-card:hover .text-muted-icon {
+  color: var(--orange);
+  transition: color 0.2s;
+}
+
+/* Leyenda de puntitos (Disponible / Ocupada) */
+.legend-dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+}

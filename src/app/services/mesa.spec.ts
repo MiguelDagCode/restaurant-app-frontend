@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { MesaService } from './mesa.service';
 
 
-describe('Mesa', () => {
+describe('MesaService', () => {
   let service: MesaService;
 
   beforeEach(() => {

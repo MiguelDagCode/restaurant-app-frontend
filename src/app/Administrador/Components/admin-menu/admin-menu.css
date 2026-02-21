@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:host {
+  font-family: 'Poppins', sans-serif;
+  --primary-orange: #FF6B35;
+  --light-orange: #FFF0E6;
+  --bg-gray: #F5F6FA;
+}
+
+/* Layout */
+#wrapper {
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  width: 260px; /* Ancho fijo del sidebar */
+  transition: margin 0.25s ease-out;
+  display: flex;
+  flex-direction: column;
+}
+
+#page-content-wrapper {
+  min-width: 0; /* Evita desbordamientos en flex */
+  background-color: var(--bg-gray);
+}
+
+/* Colores Personalizados */
+.text-orange { color: var(--primary-orange) !important; }
+.bg-orange-light { background-color: var(--light-orange) !important; }
+
+/* Banner Gradiente */
+.bg-gradient-orange {
+  background: linear-gradient(135deg, #FF6B35 0%, #FF9F43 100%);
+}
+
+/* Sidebar Links */
+.list-group-item {
+  border: none;
+  padding: 0.8rem 1.5rem;
+  color: #6c757d;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.list-group-item:hover {
+  color: var(--primary-orange);
+  background-color: var(--light-orange) !important; /* bg-transparent override */
+  border-right: 4px solid var(--primary-orange);
+}
+
+.active-link {
+  color: var(--primary-orange);
+  background-color: var(--light-orange) !important;
+  border-right: 4px solid var(--primary-orange);
+}
+
+/* Badges Suaves (Colores pasteles) */
+.bg-danger-light { background-color: #FFE5E5; }
+.bg-success-light { background-color: #E5F8ED; }
+.bg-warning-light { background-color: #FFF8E1; }
+
+/* Card Hover Effect */
+.card {
+  transition: transform 0.2s;
+}
+.card:hover {
+  transform: translateY(-3px);
+}

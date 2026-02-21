@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:host {
+  font-family: 'Poppins', sans-serif;
+  display: block;
+  
+  /* Variables de Colores */
+  --orange: #FF6B35;
+  --orange-light: #FFF0E6;
+  --success: #28a745;
+  --success-light: #E8F5E9;
+  --danger-light: #FFEBEE;
+  --warning-light: #FFF8E1;
+  --bg-gray: #FAFAFA;
+}
+
+.bg-light-gray { background-color: var(--bg-gray); }
+.text-orange { color: var(--orange) !important; }
+.bg-orange { background-color: var(--orange) !important; }
+.bg-orange-light { background-color: var(--orange-light) !important; }
+.bg-success-light { background-color: var(--success-light) !important; }
+.bg-danger-light { background-color: var(--danger-light) !important; }
+.bg-warning-light { background-color: var(--warning-light) !important; }
+
+/* Botones personalizados */
+.btn-orange {
+  background-color: var(--orange);
+  border-color: var(--orange);
+  transition: all 0.2s ease;
+}
+.btn-orange:hover {
+  background-color: #e55a2b;
+  transform: translateY(-1px);
+}
+.btn-white {
+  background-color: #fff;
+  transition: background-color 0.2s;
+}
+.btn-white:hover {
+  background-color: #f8f9fa;
+}
+
+/* Tablero y Columnas */
+.min-w-300 {
+  min-width: 340px; /* Evita que las columnas colapsen demasiado en pantallas medianas */
+}
+
+/* Indicadores de Estado (Puntitos al lado del título) */
+.status-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Tarjetas de Pedido */
+.order-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.order-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.08)!important;
+}
+
+/* Bordes sutiles según estado */
+.border-orange-subtle { border: 1px solid rgba(255, 107, 53, 0.3) !important; }
+.border-success-subtle { border: 1px solid rgba(40, 167, 69, 0.3) !important; }
+
+/* El cuadro gris grande que envuelve el número de mesa */
+.mesa-badge {
+  width: 48px;
+  height: 48px;
+  background-color: #F1F3F5; /* gris muy claro */
+}
+
+/* Scrollbar horizontal para el contenedor (Opcional, mejora visual en pantallas pequeñas) */
+.overflow-auto::-webkit-scrollbar {
+  height: 8px;
+}
+.overflow-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+.overflow-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 10px;
+}

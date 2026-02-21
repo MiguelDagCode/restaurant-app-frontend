@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:host {
+  font-family: 'Poppins', sans-serif;
+  display: block;
+  
+  --orange: #FF6B35;
+  --orange-light: #FFF0E6;
+  --success: #10B981;
+  --success-light: #ECFDF5;
+  --warning: #F59E0B;
+  --warning-light: #FEF3C7;
+  --bg-gray: #F9FAFB;
+}
+
+/* Fondos y Colores Base */
+.bg-light-gray { background-color: var(--bg-gray); }
+.text-orange { color: var(--orange) !important; }
+.bg-orange { background-color: var(--orange) !important; }
+.bg-orange-light { background-color: var(--orange-light) !important; }
+
+.text-success { color: var(--success) !important; }
+.bg-success-light { background-color: var(--success-light) !important; }
+.border-success-subtle { border-color: rgba(16, 185, 129, 0.3) !important; }
+
+.text-warning { color: var(--warning) !important; }
+.bg-warning-light { background-color: var(--warning-light) !important; }
+.border-warning-subtle { border-color: rgba(245, 158, 11, 0.3) !important; }
+
+/* Tipografía de la Tabla */
+.font-weight-600 { font-weight: 600; }
+.tracking-wide { letter-spacing: 0.05em; }
+
+/* Icono Cuadrado del Header (Módulo de Caja) */
+.icon-caja {
+  width: 40px;
+  height: 40px;
+}
+
+/* Iconos de los KPIs */
+.kpi-icon {
+  width: 60px;
+  height: 60px;
+}
+
+/* Circulito naranja de la Mesa */
+.mesa-circle {
+  width: 32px;
+  height: 32px;
+  font-size: 0.9rem;
+}
+
+/* Buscador (Input Group) */
+.form-control:focus, .form-select:focus {
+  border-color: #e5e7eb;
+  box-shadow: none;
+}
+.input-group-text, .form-control, .form-select {
+  border-color: #E5E7EB;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  border-radius: 0.5rem;
+}
+
+/* Botones */
+.btn-orange {
+  background-color: var(--orange);
+  border-color: var(--orange);
+  transition: all 0.2s;
+}
+.btn-orange:hover {
+  background-color: #e55a2b;
+  transform: translateY(-1px);
+}
+.btn-white {
+  background-color: #fff;
+}
+.hover-gray:hover {
+  background-color: #f3f4f6;
+}
+
+/* Hover de la Tabla */
+.table-hover tbody tr {
+  transition: background-color 0.2s;
+}
+.table-hover tbody tr:hover {
+  background-color: #f8f9fa;
+}
+.table td, .table th {
+  padding: 1rem 0.5rem;
+  vertical-align: middle;
+}
+.table thead th {
+  border-bottom: 1px solid #E5E7EB;
+}

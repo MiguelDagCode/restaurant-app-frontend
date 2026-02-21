@@ -1,17 +1,102 @@
-<div class="login-container">
-  <h2>Iniciar sesión</h2>
+<main class="container-fluid vh-100 p-0">
+  <div class="row g-0 h-100">
+    
+    <section class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center position-relative bg-gradient-orange text-white" aria-label="Presentación de DeliFast">
+      
+      <div class="decorative-circle circle-1" aria-hidden="true"></div>
+      <div class="decorative-circle circle-2" aria-hidden="true"></div>
 
-  <form (ngSubmit)="onLogin()">
-    <label for="correo">Correo electrónico:</label>
-    <input type="email" id="correo" [(ngModel)]="loginRequest.correo" name="correo" required />
+      <div class="z-1 text-center px-5">
+        <img src="/assets/logo.png" 
+             alt="Logo oficial de DeliFast - Servicio de delivery rápido" 
+             class="img-fluid mb-4 hero-image" 
+             style="max-height: 400px;"
+             loading="lazy">
+        
+        <h1 class="display-4 fw-bold mb-2">DeliFast</h1>
+        <p class="fs-4 opacity-75">Tu comida favorita, entregada en minutos</p>
+      </div>
+    </section>
 
-    <label for="contrasena">Contraseña:</label>
-    <input type="" id="contrasena" [(ngModel)]="loginRequest.contrasena" name="contrasena" required />
+    <section class="col-lg-6 d-flex align-items-center justify-content-center bg-white" aria-labelledby="login-title">
+      <div class="login-form-container w-100 p-5">
+        
+        <header>
+          <h2 id="login-title" class="fw-bold mb-1 text-dark">Iniciar Sesión</h2>
+          <p class="text-muted mb-5">Ingresa tus credenciales para continuar</p>
+        </header>
 
-    <button type="submit">Ingresar</button>
-  </form>
-  <button (click)="irARegistro()">Registrarse</button>
-  <div *ngIf="errorMessage" class="error">
-    {{ errorMessage }}
+        <div *ngIf="errorMessage" 
+             class="alert alert-danger d-flex align-items-center mb-4" 
+             role="alert" 
+             aria-live="polite">
+          <i class="bi bi-exclamation-triangle-fill me-2" aria-hidden="true"></i>
+          <div>{{ errorMessage }}</div>
+        </div>
+
+        <form (ngSubmit)="onLogin()" #loginForm="ngForm" aria-label="Formulario de inicio de sesión">
+          
+          <div class="mb-4">
+            <label for="email" class="form-label fw-medium text-secondary small">Correo Electrónico</label>
+            <input type="email" 
+                   class="form-control form-control-lg bg-light fs-6" 
+                   id="email" 
+                   name="email"
+                   [(ngModel)]="loginRequest.correo"
+                   required
+                   email
+                   placeholder="tu@correo.com"
+                   autocomplete="email"
+                   aria-required="true">
+          </div>
+
+          <div class="mb-4">
+            <label for="password" class="form-label fw-medium text-secondary small">Contraseña</label>
+            <div class="input-group">
+              <input [type]="showPassword ? 'text' : 'password'" 
+                     class="form-control form-control-lg bg-light fs-6 border-end-0" 
+                     id="password" 
+                     name="password"
+                     [(ngModel)]="loginRequest.password"
+                     required
+                     placeholder="........"
+                     autocomplete="current-password"
+                     aria-required="true">
+              
+              <span class="input-group-text bg-light border-start-0 cursor-pointer" 
+                    (click)="togglePassword()" 
+                    (keyup.enter)="togglePassword()"
+                    role="button"
+                    tabindex="0"
+                    [attr.aria-label]="showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+                <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" aria-hidden="true"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mb-5">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="remember" name="remember">
+              <label class="form-check-label text-muted small" for="remember">
+                Recordarme
+              </label>
+            </div>
+            <a routerLink="/recuperar" class="text-orange text-decoration-none small fw-bold" aria-label="Recuperar tu contraseña olvidada">¿Olvidaste tu contraseña?</a>
+          </div>
+
+          <button type="submit" 
+                  class="btn btn-orange btn-lg w-100 text-white fw-bold py-3 shadow-sm"
+                  [disabled]="!loginForm.form.valid"
+                  aria-label="Ingresar a tu cuenta de DeliFast">
+            Ingresar
+          </button>
+
+          <footer class="text-center text-muted mt-5 small">
+            © 2026 DeliFast. Todos los derechos reservados.
+          </footer>
+        </form>
+
+      </div>
+    </section>
   </div>
-</div>
+</main>

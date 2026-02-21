@@ -1,33 +1,82 @@
-.login-container {
-  max-width: 400px;
-  margin: auto;
-  padding: 2rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
+/* Importar fuente Poppins (opcional, para que se vea igual) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-label {
+:host {
+  font-family: 'Poppins', sans-serif;
   display: block;
-  margin-top: 1rem;
 }
 
-input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
+/* --- Fondo Gradiente Naranja (Izquierda) --- */
+.bg-gradient-orange {
+  /* Gradiente similar al de la imagen */
+  background: linear-gradient(135deg, #FF9F43 0%, #FF6B35 100%);
+  overflow: hidden; /* Para recortar los círculos decorativos */
 }
 
-button {
-  margin-top: 1.5rem;
-  padding: 0.5rem 1rem;
-  background-color: #007bff;
-  color: white;
+/* --- Elementos Decorativos de Fondo --- */
+.decorative-circle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  filter: blur(40px);
+}
+.circle-1 {
+  width: 300px;
+  height: 300px;
+  top: -50px;
+  left: -50px;
+}
+.circle-2 {
+  width: 400px;
+  height: 400px;
+  bottom: -100px;
+  right: -100px;
+}
+
+/* --- Formulario --- */
+.login-form-container {
+  max-width: 480px; /* Ancho máximo para que no se estire demasiado */
+}
+
+/* --- Inputs Personalizados --- */
+.form-control, .input-group-text {
+  border-color: #eee;
+  padding: 0.8rem 1rem;
+  border-radius: 0.75rem; /* Bordes redondeados suaves */
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1); /* Sombra naranja suave al escribir */
+  border-color: #FF6B35;
+}
+
+/* Arreglo para el grupo de input (password + icono) */
+.input-group .form-control {
+  border-radius: 0.75rem 0 0 0.75rem;
+}
+.input-group .input-group-text {
+  border-radius: 0 0.75rem 0.75rem 0;
+  background-color: #f8f9fa; /* bg-light */
+}
+
+/* --- Color Naranja Personalizado --- */
+.text-orange {
+  color: #FF6B35;
+}
+.text-orange:hover {
+  color: #e55a2b;
+}
+
+/* --- Botón Naranja --- */
+.btn-orange {
+  background-color: #FF6B35;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
 }
 
-.error {
-  margin-top: 1rem;
-  color: red;
+.btn-orange:hover {
+  background-color: #e55a2b;
+  transform: translateY(-2px); /* Pequeño efecto de elevación */
+  box-shadow: 0 10px 20px -10px rgba(255, 107, 53, 0.5);
 }

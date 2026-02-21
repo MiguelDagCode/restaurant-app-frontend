@@ -2,65 +2,47 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoginRequest } from '../../interface/loginRequest';
-import { LoginService } from '../../services/login.service';
-import { Router } from '@angular/router';
-import { jwtDecode } from 'jwt-decode';
-import { TokenService } from '../../services/token.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './login.html',
+  templateUrl: './login.html', // Asegúrate que coincida con tu archivo
   styleUrls: ['./login.css']
 })
 export class LoginComponent {
-loginRequest : LoginRequest={
-  correo: '',
-  contrasena: ''
-};
- errorMessage: string | null = null;
+  
+  loginRequest: LoginRequest = { correo: '', password: '' };
+  errorMessage: string | null = null;
+  isLoading = false; // Para deshabilitar el botón mientras carga
+  showPassword = false; // Nueva variable para el ojito
 
- constructor(
-  private loginService: LoginService,
-  private router: Router,
-  private tokenService: TokenService
- ){ }
+  constructor(private authService: AuthService) { }
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
 
- onLogin(): void {
-    this.tokenService.removeToken();
-    this.loginService.Login(this.loginRequest).subscribe({
-      next: (response) => {
-        const token = response.token;
-        this.tokenService.setToken(token);
-        this.errorMessage = null;
+  onLogin(): void {
+    if (!this.loginRequest.correo || !this.loginRequest.password) return;
 
-        // 🔹 Decodificar el token para obtener el rol
-        const decodedToken: any = jwtDecode(token);
-        const userRole = decodedToken.rol;
+    this.isLoading = true;
+    this.errorMessage = null;
 
-        switch (userRole) {
-          case 'ROLE_ADMIN':
-            this.router.navigate(['/admin-menu']);
-            break;
-          case 'ROLE_MOZO':
-            this.router.navigate(['/mozo-menu']);
-            break;
-          case 'ROLE_CAJERO':
-            this.router.navigate(['/cajero-menu']);
-            break;
-          default:
-            this.router.navigate(['/']);
-        }
+    this.authService.login(this.loginRequest).subscribe({
+      next: () => {
+        // Ya no decodificamos aquí. El servicio sabe qué hacer.
+        this.authService.redirectBasedOnRole();
       },
       error: (err) => {
-        console.error('Login fallido:', err);
-        this.errorMessage = 'Usuario o contraseña incorrectos.';
+        this.isLoading = false;
+        console.error(err);
+        if (err.status === 401) {
+          this.errorMessage = 'Credenciales incorrectas.';
+        } else {
+          this.errorMessage = 'Error de conexión con el servidor.';
+        }
       }
     });
   }
-irARegistro(): void {
-  this.router.navigate(['/register']);
-}
-
 }
