@@ -1,0 +1,102 @@
+<header class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm px-4 py-3 z-3">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <img src="/assets/logo.png" alt="DeliFast Logo" style="height: 40px; width: auto;">
+      <span class="badge bg-orange-light text-orange rounded-pill px-3 py-1 fw-semibold ms-3" style="font-size: 0.8rem;">
+        Mozo
+      </span>
+    </div>
+    <div class="d-flex align-items-center gap-4">
+      <span class="text-muted small fw-medium d-none d-md-block">mozo@delifast.com</span>
+      <button (click)="logout()" class="btn btn-link text-muted text-decoration-none p-0 fw-medium d-flex align-items-center hover-orange transition-colors">
+        Salir <i class="bi bi-box-arrow-right ms-2 fs-5"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="container-fluid flex-grow-1 p-0 d-flex overflow-hidden" style="height: calc(100vh - 76px); background-color: #F8F9FA;">
+  <div class="row w-100 m-0">
+
+    <div class="col-12 col-lg-8 p-5 overflow-auto h-100">
+
+      <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+          <h2 class="fw-bold text-dark mb-1">Mesa {{ idMesaSeleccionada }} — Tomar Pedido</h2>
+          <p class="text-muted mb-0">Selecciona productos del menú</p>
+        </div>
+        <button class="btn btn-link text-muted text-decoration-none fw-medium d-flex align-items-center" (click)="volverAlMapa()">
+          <i class="bi bi-x fs-4 me-1"></i> Cancelar
+        </button>
+      </div>
+
+      <div class="d-flex gap-3 mb-5 overflow-x-auto pb-2 category-scroll" style="white-space: nowrap;">
+        <button *ngFor="let cat of catalogo"
+                class="category-pill"
+                [ngClass]="{'active': categoriaActiva?.idCategoria === cat.idCategoria}"
+                (click)="seleccionarCategoria(cat)">
+          {{ cat.nombre }}
+        </button>
+      </div>
+
+      <div class="row g-4" *ngIf="categoriaActiva">
+        <div class="col-12 col-md-6" *ngFor="let prod of categoriaActiva.productos">
+          <article class="product-card cursor-pointer"
+                   (click)="agregarAlCarrito(prod)">
+            <div class="d-flex justify-content-between align-items-center p-4">
+              <span class="fw-semibold text-dark fs-5">{{ prod.nombre }}</span>
+              <span class="text-orange fw-bold fs-5">${{ prod.precio | number:'1.2-2' }}</span>
+            </div>
+          </article>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-12 col-lg-4 bg-white border-start p-0 d-flex flex-column h-100 cart-section">
+
+      <div class="p-4 border-bottom">
+        <h4 class="fw-bold mb-0">Pedido Actual</h4>
+        <span class="text-muted small">{{ carrito.length }} producto(s)</span>
+      </div>
+
+      <div class="p-4 flex-grow-1 overflow-auto">
+        <div *ngIf="carrito.length === 0" class="h-100 d-flex align-items-center justify-content-center text-center text-muted">
+          <p class="mb-0">Agrega productos del menú</p>
+        </div>
+
+        <ul class="list-unstyled m-0" *ngIf="carrito.length > 0">
+          <li *ngFor="let item of carrito; let i = index" class="cart-item mb-3 pb-3 border-bottom">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <span class="fw-bold me-3 text-orange fs-5">{{ item.cantidad }}x</span>
+                <span class="text-dark fw-medium fs-5">{{ item.producto.nombre }}</span>
+              </div>
+              <div class="d-flex align-items-center gap-3">
+                <span class="fw-bold text-dark">${{ (item.producto.precio * item.cantidad) | number:'1.2-2' }}</span>
+                <button class="btn btn-sm text-danger p-0" (click)="quitarDelCarrito(i)">
+                  <i class="bi bi-x-circle-fill fs-5"></i>
+                </button>
+              </div>
+            </div>
+            </li>
+        </ul>
+      </div>
+
+      <div class="p-4 bg-white border-top">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <span class="fw-bold fs-4">Total</span>
+          <span class="text-orange fw-bold fs-3">${{ totalPedido | number:'1.2-2' }}</span>
+        </div>
+        <button class="btn-send w-100 py-3 fw-bold rounded-3"
+                [disabled]="carrito.length === 0"
+                (click)="enviarACocina()"
+                [style.opacity]="carrito.length === 0 ? '0.6' : '1'">
+          <i class="bi bi-send-fill me-2"></i> Enviar a Cocina
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>

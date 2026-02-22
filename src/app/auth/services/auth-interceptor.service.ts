@@ -4,10 +4,12 @@ import { TokenService } from './token.service';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
+export const authInterceptorService: HttpInterceptorFn = (req, next) => {
+  console.error('🛑 INTERCEPTOR EJECUTÁNDOSE PARA:', req.url); // <--- TEST 1
   const tokenService = inject(TokenService);
   const router = inject(Router);
   const token = tokenService.getToken();
+  console.error('🔑 TOKEN ENCONTRADO:', token); // <--- TEST 2
 
   // Excluir login/register para evitar bucles
   if (req.url.includes('/auth/login') || req.url.includes('/auth/register')) {
