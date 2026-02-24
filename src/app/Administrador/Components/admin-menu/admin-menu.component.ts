@@ -25,4 +25,4 @@ adminEmail: string = 'admin@delifast.com';
     this.tokenService.removeToken();
     this.router.navigate(['/login']);
   }
-}
+}//EJEMPLO DE USO DEL TOKEN SERVICE PARA OBTENER EL EMAIL DEL ADMINISTRADOR
