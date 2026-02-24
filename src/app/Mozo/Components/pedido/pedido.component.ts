@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductoListResponseDto } from '../../../models/ProductoListResponseDto';
 import { CategoriaConProductosDto } from '../../../models/CategoriaConProductosDto';
-import { ProductoService } from '../../../Services/producto.service';
 import { TokenService } from '../../../auth/services/token.service';
-import { PedidoService } from '../../../Services/pedido.service';
 import { PedidoRequest } from '../../../models/PedidoRequest';
 import Swal from 'sweetalert2';
+import { PedidoService } from '../../../services/pedido.service';
+import { ProductoService } from '../../../services/producto.service';
 
 // Interfaz para el carrito
 export interface DetalleCarrito {

@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenService } from '../../../auth/services/token.service';
-import { MesaService } from '../../../Services/mesa.service';
 import { Mesa } from '../../../models/mesa';
+import { MesaService } from '../../../services/mesa.service';
 
 @Component({
   selector: 'app-mozo-menu',
