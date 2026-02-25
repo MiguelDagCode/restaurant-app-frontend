@@ -1,5 +1,5 @@
 :host {
-  /* Variables del nuevo tema administrativo */
+  /* Variables del tema administrativo */
   --brand-orange: #f97316;
   --brand-orange-dark: #ea580c;
   --bg-main: #fcfcfc;
@@ -8,7 +8,7 @@
   min-height: 100vh;
 }
 
-/* Tipografía de administración (más limpia, sin serifas) */
+/* Tipografía de administración */
 .letter-spacing-1 {
   letter-spacing: 0.5px;
 }
@@ -39,27 +39,16 @@
   box-shadow: 0 .25rem .75rem rgba(249, 115, 22, 0.2) !important;
 }
 
-/* Controles de Formulario */
+/* Controles de Búsqueda */
 .search-container:focus-within {
   border-color: var(--brand-orange) !important;
   box-shadow: 0 0 0 0.25rem rgba(249, 115, 22, 0.15) !important;
 }
 
-.custom-select {
-  cursor: pointer;
-}
-.custom-select:focus {
-  border-color: var(--brand-orange);
-  box-shadow: 0 0 0 0.25rem rgba(249, 115, 22, 0.15);
-}
-.min-w-150 {
-  min-width: 150px;
-}
-
 /* Tabla Personalizada */
 .custom-table th {
   font-weight: 600;
-  color: #6b7280; /* Gris intermedio */
+  color: #6b7280;
 }
 
 .custom-table td {
@@ -79,7 +68,7 @@
   background-color: #f9fafb;
 }
 
-/* Badges de Estado (Pasteles y suaves como en el diseño) */
+/* Badges de Estado (Pastillas visuales) */
 .badge-soft-success {
   background-color: #d1fae5;
   color: #059669;
@@ -90,9 +79,9 @@
   color: #dc2626;
 }
 
-.badge-soft-warning {
-  background-color: #fef3c7;
-  color: #d97706;
+.badge-soft-gray {
+  background-color: #f3f4f6;
+  color: #6b7280;
 }
 
 /* Botones de Acción en Tabla */
@@ -115,4 +104,13 @@
 .hover-danger:hover {
   color: #dc2626 !important;
   background-color: #fee2e2;
+}
+
+.text-success {
+  color: #10b981 !important;
+}
+
+.hover-success:hover {
+  color: #059669 !important;
+  background-color: #d1fae5;
 }

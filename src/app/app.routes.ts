@@ -6,6 +6,8 @@ import { CajeroMenuComponent } from './Cajero/Components/cajero-menu/cajero-menu
 import { MozoMenuComponent } from './Mozo/Components/mozo-menu/mozo-menu.component';
 import { PedidoComponent } from './Mozo/Components/pedido/pedido.component';
 import { InsumosComponent } from './Administrador/Components/insumos/insumos.component';
+import { RolesComponent } from './Administrador/Components/roles/roles.component';
+import { UsuariosComponent } from './Administrador/Components/usuarios/usuarios.component';
 
 
 export const routes: Routes = [
@@ -15,6 +17,8 @@ export const routes: Routes = [
 { path: 'admin-menu', component: AdminMenuComponent, 
      children: [
       { path: 'insumos', component: InsumosComponent },
+      { path: 'usuarios', component: UsuariosComponent },
+      { path: 'roles', component: RolesComponent },
       // { path: 'productos', component: ProductosComponent },
       // { path: 'usuarios', component: UsuariosComponent },
     ] }, 

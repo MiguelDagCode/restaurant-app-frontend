@@ -1,0 +1,84 @@
+<div class="container-fluid py-4 px-md-4">
+  
+  <header class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+    <div class="d-flex align-items-center gap-2">
+      <div class="text-orange" style="color: #FF6B35;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+      </div>
+      <h1 class="h3 fw-bold text-dark mb-0">Roles de Acceso</h1>
+    </div>
+    
+    <button (click)="abrirModalRol()" class="btn text-white rounded-3 px-4 py-2 fw-medium d-flex align-items-center gap-2 shadow-sm transition-transform hover-lift" style="background-color: #FF6B35;">
+      <i class="bi bi-plus-lg"></i> Nuevo Rol
+    </button>
+  </header>
+
+  <div class="d-flex flex-column flex-md-row gap-3 mb-4">
+    <div class="input-group bg-white rounded-3 shadow-sm border border-light flex-grow-1 search-container" style="max-width: 400px;">
+      <span class="input-group-text bg-transparent border-0 text-muted ps-3">
+        <i class="bi bi-search"></i>
+      </span>
+      <input type="text" class="form-control border-0 bg-transparent shadow-none py-2" 
+             placeholder="Buscar rol por nombre..."
+             [(ngModel)]="terminoBusqueda"
+             (input)="aplicarFiltro()">
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 custom-table">
+        <thead class="bg-light-gray text-muted small fw-semibold text-uppercase letter-spacing-1">
+          <tr>
+            <th scope="col" class="ps-4 py-3 border-0" style="width: 80px;">ID</th>
+            <th scope="col" class="py-3 border-0">Nombre del Rol</th>
+            <th scope="col" class="py-3 border-0 text-center">Estado</th>
+            <th scope="col" class="pe-4 py-3 border-0 text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="border-top-0">
+          
+          <tr *ngFor="let rol of rolesFiltrados" [ngClass]="{'opacity-75': !rol.activo}">
+            <td class="ps-4 py-3 text-muted fw-medium">#{{ rol.idRol }}</td>
+            <td class="py-3 fw-bold" [ngClass]="rol.activo ? 'text-dark' : 'text-muted text-decoration-line-through'">
+              {{ rol.nombreRol }}
+            </td>
+            
+            <td class="py-3 text-center">
+              <span *ngIf="rol.activo" class="badge rounded-pill bg-success-subtle text-success border border-success-subtle px-3 py-2 fw-medium">
+                Activo
+              </span>
+              <span *ngIf="!rol.activo" class="badge rounded-pill bg-secondary-subtle text-secondary border border-secondary-subtle px-3 py-2 fw-medium">
+                Inactivo
+              </span>
+            </td>
+            
+            <td class="pe-4 py-3 text-end">
+              <button class="btn btn-sm btn-light text-primary hover-primary me-2" aria-label="Editar Rol" 
+                      [disabled]="!rol.activo" (click)="abrirModalRol(rol)">
+                <i class="bi bi-pencil-fill"></i>
+              </button>
+              
+              <button class="btn btn-sm btn-light hover-danger" 
+                      [ngClass]="rol.activo ? 'text-danger' : 'text-success'"
+                      [attr.aria-label]="rol.activo ? 'Deshabilitar Rol' : 'Habilitar Rol'" 
+                      (click)="cambiarEstado(rol)">
+                <i class="bi" [ngClass]="rol.activo ? 'bi-x-circle-fill' : 'bi-check-circle-fill'"></i>
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="rolesFiltrados.length === 0">
+            <td colspan="4" class="text-center py-5 text-muted">
+              <i class="bi bi-shield-x fs-2 mb-2 d-block opacity-50"></i>
+              No se encontraron roles.
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
