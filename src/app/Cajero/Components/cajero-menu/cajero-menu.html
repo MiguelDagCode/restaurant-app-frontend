@@ -93,7 +93,7 @@
                 <td class="text-center">
                   <span class="badge rounded-pill px-3 py-2 fw-medium border"
                         [ngClass]="{
-                          'bg-warning-light text-warning border-warning-subtle': p.estadoPedido === 'PENDIENTE' || p.estadoPedido === 'EN_PREPARACION',
+                          'bg-warning-light text-warning border-warning-subtle': p.estadoPedido === 'PENDIENTE' || p.estadoPedido === 'ENTREGADO',
                           'bg-info-light text-info border-info-subtle': p.estadoPedido === 'ENTREGADO',
                           'bg-success-light text-success border-success-subtle': p.estadoPedido === 'PAGADO'
                         }">

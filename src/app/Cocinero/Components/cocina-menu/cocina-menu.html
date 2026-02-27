@@ -7,7 +7,7 @@
       </div>
       <div>
         <h2 class="fw-bold mb-0 text-dark">Cocina</h2>
-        <p class="text-muted mb-0 small">Tablero de Producción</p>
+        <p class="text-muted mb-0 small">Tablero de Producción KDS</p>
       </div>
     </div>
     
@@ -16,9 +16,9 @@
         <i class="bi bi-clock me-1 text-muted"></i> {{ pendientes.length }} pendientes
       </span>
       <span class="badge bg-white text-dark border px-3 py-2 rounded-pill shadow-sm">
-        <i class="bi bi-tools me-1 text-muted"></i> {{ enPreparacion.length }} en preparación
+        <i class="bi bi-tools me-1 text-muted"></i> {{ enPreparacion.length }} en fuego
       </span>
-      <button class="btn btn-white border shadow-sm rounded-circle p-2" aria-label="Cerrar sesión">
+      <button class="btn btn-white border shadow-sm rounded-circle p-2" aria-label="Cerrar sesión" (click)="logout()">
         <i class="bi bi-box-arrow-right"></i>
       </button>
     </div>
@@ -38,102 +38,106 @@
         <div class="card-body p-4">
           <div class="d-flex justify-content-between align-items-start mb-3">
             <div class="d-flex gap-3 align-items-center">
-              <div class="mesa-badge bg-light text-dark fw-bold fs-4 rounded-3 d-flex align-items-center justify-content-center">
-                {{ p.mesa }}
+              <div class="mesa-badge bg-light text-dark fw-bold fs-4 rounded-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                {{ p.numeroMesa }}
               </div>
               <div>
-                <h6 class="fw-bold mb-0">Mesa {{ p.mesa }}</h6>
-                <small class="text-muted">{{ p.cliente }}</small>
+                <h6 class="fw-bold mb-0">Mesa {{ p.numeroMesa }}</h6>
+                <small class="text-muted">{{ p.nombreMozo }}</small>
               </div>
             </div>
-            <span class="badge rounded-pill border px-2 py-1 {{ getColorTiempo(p.tiempoEspera) }}">
-              <i class="bi bi-stopwatch"></i> {{ p.tiempoEspera }} min
+            <span class="badge rounded-pill border px-2 py-1 shadow-sm" [ngClass]="getColorTiempo(calcularMinutosTranscurridos(p.fechaApertura))">
+              <i class="bi bi-stopwatch"></i> {{ calcularMinutosTranscurridos(p.fechaApertura) }} min
             </span>
           </div>
 
           <div class="text-muted small mb-3">
-            <i class="bi bi-clock"></i> {{ p.hora }} · {{ p.id }}
+            <i class="bi bi-clock"></i> {{ p.fechaApertura | date:'shortTime' }} · PED-{{ p.idPedido | number:'3.0' }}
           </div>
 
           <ul class="list-unstyled mb-4">
-            <li *ngFor="let item of p.items" class="mb-2">
-              <span class="text-muted me-2">x{{ item.cantidad }}</span>
-              <span class="fw-medium text-dark">{{ item.nombre }}</span>
-              <div *ngIf="item.nota" class="text-orange small ms-4 fst-italic">
-                <i class="bi bi-pencil-fill me-1"></i> {{ item.nota }}
+            <li *ngFor="let item of p.detalles" class="mb-2">
+              <span class="text-muted fw-bold me-2">{{ item.cantidad }}x</span>
+              <span class="fw-medium text-dark fs-6">{{ item.nombreProducto }}</span>
+              <div *ngIf="item.observaciones" class="text-orange small ms-4 fst-italic mt-1">
+                <i class="bi bi-exclamation-circle-fill me-1"></i> {{ item.observaciones }}
               </div>
             </li>
           </ul>
 
           <div class="d-flex gap-2">
-            <button class="btn btn-outline-secondary rounded-3 px-3 fw-medium flex-grow-1">
+            <button class="btn btn-outline-secondary rounded-3 px-3 fw-medium flex-grow-1" (click)="verDetalle(p)">
               <i class="bi bi-eye me-1"></i> Detalle
             </button>
-            <button class="btn btn-orange text-white rounded-3 px-4 fw-bold flex-grow-1 shadow-sm" (click)="cambiarEstado(p, 'En Preparacion')">
+            <button class="btn btn-orange text-white rounded-3 px-4 fw-bold flex-grow-1 shadow-sm" (click)="iniciarPreparacion(p)">
               <i class="bi bi-fire me-1"></i> Preparar
             </button>
           </div>
         </div>
       </div>
+      
+      <div *ngIf="pendientes.length === 0" class="text-center py-5 text-muted opacity-50">
+        <i class="bi bi-check-circle fs-1"></i>
+        <p class="mt-2">No hay órdenes nuevas</p>
+      </div>
     </section>
 
     <section class="col-12 col-md-6 col-xl-4 min-w-300">
       <div class="d-flex justify-content-between align-items-center mb-3 px-1">
-        <h5 class="fw-bold mb-0 d-flex align-items-center">
+        <h5 class="fw-bold mb-0 d-flex align-items-center text-orange">
           <span class="status-dot bg-orange me-2"></span> En Preparación
         </h5>
-        <span class="badge bg-orange rounded-pill text-white">{{ enPreparacion.length }}</span>
+        <span class="badge bg-orange text-white rounded-pill">{{ enPreparacion.length }}</span>
       </div>
 
-      <div class="card order-card shadow-sm mb-3 border-orange-subtle rounded-4" *ngFor="let p of enPreparacion">
+      <div class="card order-card shadow-sm mb-3 border-orange-subtle rounded-4" style="border-width: 2px !important;" *ngFor="let p of enPreparacion">
         <div class="card-body p-4">
           <div class="d-flex justify-content-between align-items-start mb-3">
             <div class="d-flex gap-3 align-items-center">
-              <div class="mesa-badge bg-orange-light text-orange fw-bold fs-4 rounded-3 d-flex align-items-center justify-content-center">
-                {{ p.mesa }}
+              <div class="mesa-badge bg-orange-light text-orange fw-bold fs-4 rounded-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                {{ p.numeroMesa }}
               </div>
               <div>
-                <h6 class="fw-bold mb-0">Mesa {{ p.mesa }}</h6>
-                <small class="text-muted">{{ p.cliente }}</small>
+                <h6 class="fw-bold mb-0">Mesa {{ p.numeroMesa }}</h6>
+                <small class="text-muted">{{ p.nombreMozo }}</small>
               </div>
             </div>
-            <span class="badge rounded-pill border px-2 py-1 {{ getColorTiempo(p.tiempoEspera) }}">
-              <i class="bi bi-stopwatch"></i> {{ p.tiempoEspera }} min
+            <span class="badge rounded-pill border px-2 py-1 shadow-sm" [ngClass]="getColorTiempo(calcularMinutosTranscurridos(p.fechaApertura))">
+              <i class="bi bi-stopwatch"></i> {{ calcularMinutosTranscurridos(p.fechaApertura) }} min
             </span>
           </div>
 
           <div class="text-muted small mb-3">
-            <i class="bi bi-clock"></i> {{ p.hora }} · {{ p.id }}
+            <i class="bi bi-clock"></i> {{ p.fechaApertura | date:'shortTime' }} · PED-{{ p.idPedido | number:'3.0' }}
           </div>
 
           <ul class="list-unstyled mb-4">
-            <li *ngFor="let item of p.items" class="mb-2">
-              <span class="text-muted me-2">x{{ item.cantidad }}</span>
-              <span class="fw-medium text-dark">{{ item.nombre }}</span>
-              <div *ngIf="item.nota" class="text-orange small ms-4 fst-italic">
-                <i class="bi bi-pencil-fill me-1"></i> {{ item.nota }}
+            <li *ngFor="let item of p.detalles" class="mb-2">
+              <span class="text-muted fw-bold me-2">{{ item.cantidad }}x</span>
+              <span class="fw-bold text-dark fs-5">{{ item.nombreProducto }}</span>
+              <div *ngIf="item.observaciones" class="text-danger small ms-4 fw-bold mt-1">
+                <i class="bi bi-exclamation-triangle-fill me-1"></i> {{ item.observaciones }}
               </div>
             </li>
           </ul>
 
           <div class="d-flex gap-2">
-            <button class="btn btn-outline-secondary rounded-3 px-3 fw-medium flex-grow-1">
-              <i class="bi bi-eye me-1"></i> Detalle
-            </button>
-            <button class="btn btn-orange text-white rounded-3 px-4 fw-bold flex-grow-1 shadow-sm" (click)="cambiarEstado(p, 'Listo')">
-              <i class="bi bi-check-circle me-1"></i> Listo
-            </button>
-            <button class="btn btn-danger rounded-3 px-3 text-white shadow-sm">
-              <i class="bi bi-trash3"></i>
+            <button class="btn btn-success text-white rounded-3 px-4 fw-bold flex-grow-1 shadow-sm py-2 text-uppercase" (click)="finalizarPreparacion(p)">
+              <i class="bi bi-check-circle-fill me-1"></i> Listo para Servir
             </button>
           </div>
         </div>
+      </div>
+
+      <div *ngIf="enPreparacion.length === 0" class="text-center py-5 text-muted opacity-50">
+        <i class="bi bi-cup-hot fs-1"></i>
+        <p class="mt-2">Ninguna orden en fuego</p>
       </div>
     </section>
 
     <section class="col-12 col-md-6 col-xl-4 min-w-300">
       <div class="d-flex justify-content-between align-items-center mb-3 px-1">
-        <h5 class="fw-bold mb-0 d-flex align-items-center">
+        <h5 class="fw-bold mb-0 d-flex align-items-center text-success">
           <span class="status-dot bg-success me-2"></span> Listo para Servir
         </h5>
         <span class="badge bg-success rounded-pill">{{ listos.length }}</span>
@@ -143,35 +147,22 @@
         <div class="card-body p-4">
           <div class="d-flex justify-content-between align-items-start mb-3">
             <div class="d-flex gap-3 align-items-center">
-              <div class="mesa-badge bg-white text-success fw-bold fs-4 rounded-3 d-flex align-items-center justify-content-center shadow-sm">
-                {{ p.mesa }}
+              <div class="mesa-badge bg-white text-success fw-bold fs-4 rounded-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 50px; height: 50px;">
+                {{ p.numeroMesa }}
               </div>
               <div>
-                <h6 class="fw-bold mb-0">Mesa {{ p.mesa }}</h6>
-                <small class="text-muted">{{ p.cliente }}</small>
+                <h6 class="fw-bold mb-0">Mesa {{ p.numeroMesa }}</h6>
+                <small class="text-muted">{{ p.nombreMozo }}</small>
               </div>
             </div>
-            <span class="badge rounded-pill border px-2 py-1 text-success bg-white border-success">
-              <i class="bi bi-stopwatch"></i> {{ p.tiempoEspera }} min
-            </span>
           </div>
 
           <div class="text-muted small mb-3">
-            <i class="bi bi-clock"></i> {{ p.hora }} · {{ p.id }}
+            <i class="bi bi-clock"></i> Terminado: {{ p.fechaApertura | date:'shortTime' }}
           </div>
 
-          <ul class="list-unstyled mb-4">
-            <li *ngFor="let item of p.items" class="mb-2">
-              <span class="text-muted me-2">x{{ item.cantidad }}</span>
-              <span class="fw-medium text-dark">{{ item.nombre }}</span>
-              <div *ngIf="item.nota" class="text-orange small ms-4 fst-italic">
-                <i class="bi bi-pencil-fill me-1"></i> {{ item.nota }}
-              </div>
-            </li>
-          </ul>
-
-          <button class="btn btn-white border rounded-3 w-100 fw-medium shadow-sm">
-            <i class="bi bi-eye me-1"></i> Detalle
+          <button class="btn btn-white border border-success-subtle text-success rounded-3 w-100 fw-medium shadow-sm" (click)="verDetalle(p)">
+            <i class="bi bi-eye me-1"></i> Ver Ticket
           </button>
         </div>
       </div>
