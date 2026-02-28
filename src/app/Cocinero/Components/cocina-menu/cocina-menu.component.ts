@@ -105,12 +105,58 @@ export class CocinaMenuComponent implements OnInit, OnDestroy {
 
   // Acción para el botón de Detalle
   verDetalle(pedido: PedidoResponse): void {
-    // Implementar modal con detalle completo si se desea
+    // 1. Construimos las filas de los productos iterando sobre el arreglo
+    let htmlProductos = '';
+    
+    pedido.detalles.forEach(item => {
+      // Si hay nota, la mostramos en rojo y cursiva para que el cocinero no la pase por alto
+      const notaHtml = item.observaciones 
+        ? `<div class="text-danger small fst-italic mt-1"><i class="bi bi-exclamation-triangle-fill me-1"></i>${item.observaciones}</div>` 
+        : '';
+
+      htmlProductos += `
+        <tr>
+          <td class="text-center align-middle fw-bold fs-5">${item.cantidad}</td>
+          <td class="text-start align-middle">
+            <span class="fw-medium">${item.nombreProducto}</span>
+            ${notaHtml}
+          </td>
+        </tr>
+      `;
+    });
+
+    // 2. Armamos la estructura final del modal
+    const htmlModal = `
+      <div class="text-start mb-3 pb-2 border-bottom">
+        <p class="mb-1 text-muted"><i class="bi bi-person-badge me-2"></i>Mozo: <span class="text-dark fw-medium">${pedido.nombreMozo}</span></p>
+        <p class="mb-1 text-muted"><i class="bi bi-clock me-2"></i>Hora de orden: <span class="text-dark fw-medium">${new Date(pedido.fechaApertura).toLocaleTimeString()}</span></p>
+      </div>
+      
+      <table class="table table-sm table-hover mb-0">
+        <thead class="table-light text-muted">
+          <tr>
+            <th class="text-center" style="width: 20%;">Cant.</th>
+            <th class="text-start">Descripción del Plato</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${htmlProductos}
+        </tbody>
+      </table>
+    `;
+
+    // 3. Lanzamos la alerta
     Swal.fire({
-      title: `Detalles Mesa ${pedido.numeroMesa}`,
-      text: 'Aquí se mostrarían datos extra si los hubiera',
+      title: `Orden PED-${String(pedido.idPedido).padStart(3, '0')} <br><span class="text-orange fs-4">Mesa ${pedido.numeroMesa}</span>`,
+      html: htmlModal,
       icon: 'info',
-      confirmButtonColor: '#FF6B35'
+      width: '500px',
+      confirmButtonColor: '#FF6B35',
+      confirmButtonText: '<i class="bi bi-check-lg me-1"></i> Entendido',
+      showCloseButton: true,
+      customClass: {
+        title: 'fs-3 fw-bold text-dark'
+      }
     });
   }
 }
